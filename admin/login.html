@@ -36,6 +36,38 @@
         </form>
       </div>
     </div>
+
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">温馨提示</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">
+              确认
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script>
       // 入口函数
       $(function() {
@@ -49,7 +81,9 @@
             .val()
             .trim();
           if (userName == "" || userPwd == "") {
-            alert("空的");
+            // alert("空的");
+            $("#myModal").modal();
+            $(".modal-body").text("空的");
             return;
           }
           $.ajax({
@@ -61,12 +95,17 @@
             },
             success: function(res) {
               // console.log(res);
+              $("#myModal").modal();
+              $(".modal-body").text(res.msg);
               if (res.code == 200) {
-                alert("登录成功");
-                window.location.href = "./index.html";
-              } else {
-                alert("傻子吧");
+                $("#myModal").on("hidden.bs.modal", function(e) {
+                  window.location.href = "./index.html";
+                });
               }
+              //  else {
+              //   $("#myModal").modal();
+              //   $(".modal-body").text(res.msg);
+              // }
             }
           });
         });
