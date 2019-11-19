@@ -98,6 +98,7 @@
               $("#myModal").modal();
               $(".modal-body").text(res.msg);
               if (res.code == 200) {
+                window.localStorage.setItem("token", res.token);
                 $("#myModal").on("hidden.bs.modal", function(e) {
                   window.location.href = "./index.html";
                 });
